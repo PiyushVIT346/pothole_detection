@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Video - Pothole Patrol{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold mb-3">Upload Video for Analysis</h1>
+                <p class="lead text-muted">
+                    Upload your video files to analyze for pothole detection using our advanced AI system.
+                </p>
+            </div>
+            
+            <!-- Upload Card -->
+            <div class="card shadow-soft">
+                <div class="card-header bg-transparent border-0 py-4">
+                    <h4 class="mb-0"><i class="fas fa-cloud-upload-alt me-2"></i>Video Upload</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
+                        <!-- File Input -->
+                        <div class="mb-4">
+                            <label for="videoFile" class="form-label fw-semibold">Select Video File</label>
+                            <input type="file" class="form-control form-control-lg" id="videoFile" name="video" 
+                                   accept="video/*" required>
+                            <div class="form-text">
+                                Supported formats: MP4, AVI, MOV, WMV. Maximum file size: 100MB.
+                            </div>
+                        </div>
+                        
+                        <!-- Optional Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold">Description (Optional)</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" 
+                                      placeholder="Add any notes about the video location, conditions, etc."></textarea>
+                        </div>
+                        
+                        <!-- Upload Progress (Hidden initially) -->
+                        <div id="uploadProgress" class="mb-4" style="display: none;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted">Uploading...</span>
+                                <span id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                            </a>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <i class="fas fa-upload me-2"></i>Upload & Analyze
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Info Cards -->
+            <div class="row g-4 mt-4">
+                <div class="col-md-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="text-primary mb-3">
+                                <i class="fas fa-brain fa-2x"></i>
+                            </div>
+                            <h6>AI-Powered Analysis</h6>
+                            <p class="text-muted small">Advanced YOLO model detects potholes with high accuracy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="text-primary mb-3">
+                                <i class="fas fa-chart-line fa-2x"></i>
+                            </div>
+                            <h6>Detailed Reports</h6>
+                            <p class="text-muted small">Get comprehensive analysis with detection confidence scores</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <div class="text-primary mb-3">
+                                <i class="fas fa-map-pin fa-2x"></i>
+                            </div>
+                            <h6>Location Mapping</h6>
+                            <p class="text-muted small">Detected potholes are automatically mapped for visualization</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    // Show upload progress (placeholder - would need actual upload handling)
+    const submitBtn = document.getElementById('submitBtn');
+    const progressDiv = document.getElementById('uploadProgress');
+    
+    submitBtn.innerHTML = '<div class="loading-spinner me-2"></div>Processing...';
+    submitBtn.disabled = true;
+    progressDiv.style.display = 'block';
+    
+    // This is just a demo - in real implementation, you'd handle file upload with progress
+    alert('Upload feature is a placeholder. In the full implementation, this would process the video file.');
+    
+    // Reset button
+    setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fas fa-upload me-2"></i>Upload & Analyze';
+        submitBtn.disabled = false;
+        progressDiv.style.display = 'none';
+    }, 2000);
+    
+    e.preventDefault();
+});
+</script>
+{% endblock %}

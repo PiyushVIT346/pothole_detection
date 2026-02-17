@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Pothole Patrol</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shield-alt me-2"></i>Pothole Patrol
+            </a>
+            
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Detect Potholes.<br>Drive Safer.</h1>
+                        <p class="hero-subtitle">
+                            Advanced AI-powered pothole detection system helping make roads safer for everyone. 
+                            Monitor live detections and explore interactive maps in real-time.
+                        </p>
+                        <button class="btn btn-primary btn-lg get-started-btn" onclick="location.href='{{ url_for('login') }}'">
+                            Get Started <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-visual">
+                        <div class="glass-card main-card">
+                            <div class="card-header">
+                                <span class="brand-mini"><i class="fas fa-shield-alt"></i> Pothole Patrol</span>
+                                <div class="nav-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <h3>Detect Potholes.<br>Drive Safer.</h3>
+                                <p>Advanced AI-powered Pothole Detection</p>
+                                
+                                <div class="feature-grid">
+                                    <div class="feature-card">
+                                        <div class="feature-icon upload">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="feature-text">
+                                            <h6>Upload Video</h6>
+                                            <small>AI-powered video analysis for pothole detection</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-card">
+                                        <div class="feature-icon detection">
+                                            <i class="fas fa-eye"></i>
+                                        </div>
+                                        <div class="feature-text">
+                                            <h6>AI Detection</h6>
+                                            <small>Real-time monitoring with advanced algorithms</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="feature-card">
+                                        <div class="feature-icon map">
+                                            <i class="fas fa-map-marked-alt"></i>
+                                        </div>
+                                        <div class="feature-text">
+                                            <h6>Pothole Map</h6>
+                                            <small>Interactive mapping with severity levels</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-get-started">Get Started</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Map Cards -->
+                        <div class="floating-map map-1">
+                            <div class="mini-map">
+                                <div class="map-markers">
+                                    <span class="marker high"></span>
+                                    <span class="marker medium"></span>
+                                    <span class="marker low"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="floating-map map-2">
+                            <div class="mini-map">
+                                <div class="map-markers">
+                                    <span class="marker medium"></span>
+                                    <span class="marker high"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="section-title">Why Choose Pothole Patrol?</h2>
+                    <p class="section-subtitle">Advanced technology for safer roads</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-feature-card">
+                        <div class="feature-icon-large upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h5>Upload Video</h5>
+                        <p>Upload your own video files for AI-powered pothole detection analysis and get detailed reports with confidence scores.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="glass-feature-card">
+                        <div class="feature-icon-large detection">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h5>AI Detection</h5>
+                        <p>Real-time AI detection system actively monitoring and identifying potholes using advanced computer vision algorithms.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="glass-feature-card">
+                        <div class="feature-icon-large map">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h5>Pothole Map</h5>
+                        <p>Interactive map showing detected potholes with severity levels, filters, and location-based insights for better navigation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="footer-brand">
+                        <i class="fas fa-shield-alt me-2"></i>Pothole Patrol
+                    </div>
+                    <p class="footer-text">Making roads safer through AI-powered pothole detection technology.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="footer-links">
+                        <a href="#" onclick="alert('Coming Soon!')">About</a>
+                        <a href="#" onclick="alert('Coming Soon!')">Privacy</a>
+                        <a href="#" onclick="alert('Coming Soon!')">Terms</a>
+                        <a href="#" onclick="alert('Coming Soon!')">Contact</a>
+                    </div>
+                    <div class="footer-credits">
+                        <small>&copy; 2024 Pothole Patrol. Built with Flask & AI.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

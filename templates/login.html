@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Pothole Patrol{% endblock %}
+
+{% block head_extra %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f2eb 0%, #ede8df 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: auto;
+        
+    }
+
+    .auth-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .auth-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 8px 32px rgba(139, 69, 19, 0.1);
+    }
+
+    .auth-title {
+        color: #8b4513;
+        font-weight: 700;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        color: #8b4513;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: #d2691e;
+        box-shadow: 0 0 0 0.2rem rgba(210, 105, 30, 0.25);
+        color: #8b4513;
+    }
+
+    .form-control::placeholder {
+        color: #cd853f;
+    }
+
+    .btn-auth {
+        background: linear-gradient(135deg, #d2691e, #cd853f);
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .btn-auth:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(210, 105, 30, 0.3);
+        background: linear-gradient(135deg, #cd853f, #d2691e);
+    }
+
+    .auth-link {
+        color: #a0522d;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .auth-link:hover {
+        color: #d2691e;
+    }
+
+    .brand-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .brand-header i {
+        color: #d2691e;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .navbar {
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="brand-header">
+                <i class="fas fa-shield-alt"></i>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="text-muted text-center">Sign in to your Pothole Patrol account</p>
+            </div>
+            
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-auth mb-3">
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </button>
+            </form>
+            
+            <div class="text-center">
+                <p class="mb-2">Don't have an account?</p>
+                <a href="{{ url_for('register') }}" class="auth-link">Create Account</a>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{{ url_for('welcome') }}" class="auth-link">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

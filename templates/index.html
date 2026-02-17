@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Pothole Patrol{% endblock %}
+
+{% block head_extra %}
+<meta name="description" content="Advanced pothole detection dashboard with live AI monitoring and interactive mapping">
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<section class="dashboard-header py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="dashboard-title">Dashboard</h1>
+                <p class="dashboard-subtitle">Monitor pothole detection activity and explore interactive maps</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="dashboard-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="header-detections">0</span>
+                        <span class="stat-label">Active Detections</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Dashboard Grid -->
+<section class="dashboard-grid py-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Upload Section -->
+            <div class="col-lg-6">
+                <div class="glass-card upload-section">
+                    <div class="card-header">
+                        <h5><i class="fas fa-cloud-upload-alt me-2"></i>Upload Video</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-dropzone" id="uploadDropzone">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h6>Drag & Drop Video Files</h6>
+                                <p class="text-muted">or click to browse</p>
+                                <button class="btn btn-outline-primary btn-sm">Browse Files</button>
+                            </div>
+                        </div>
+                        <div class="upload-info mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Supported: MP4, AVI, MOV • Max size: 100MB
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Metrics Section -->
+            <div class="col-lg-6">
+                <div class="glass-card metrics-section">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Detection Metrics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <canvas id="severityChart" width="150" height="150"></canvas>
+                            </div>
+                            <div class="col-6">
+                                <canvas id="detectionChart" width="150" height="100"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Processed Data Section -->
+            <div class="col-lg-8">
+                <div class="glass-card processed-section">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-video me-2"></i>Live Detection Feed</h5>
+                        <span class="live-badge">LIVE</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="video-container position-relative">
+                            <img id="video-feed" src="{{ url_for('video_feed') }}" class="video-feed" alt="Live Pothole Detection Feed">
+                            <div class="detection-overlay">
+                                <div class="detection-counter">
+                                    <span class="counter-value" id="live-detections">0</span>
+                                    <span class="counter-label">Potholes Detected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Section -->
+            <div class="col-lg-4">
+                <div class="glass-card profile-section">
+                    <div class="card-header">
+                        <h5><i class="fas fa-user me-2"></i>Profile</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="profile-avatar mb-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h6>{{ session.username }}</h6>
+                        <p class="text-muted small">Pothole Patrol User</p>
+                        
+                        <div class="profile-stats mb-3">
+                            <div class="stat-row">
+                                <span class="stat-label">Reports Submitted</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Videos Analyzed</span>
+                                <span class="stat-value">8</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-actions">
+                            <button class="btn btn-outline-primary btn-sm me-2" onclick="alert('Settings coming soon!')">
+                                <i class="fas fa-cog"></i> Settings
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="alert('Edit profile coming soon!')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mini Map Section -->
+            <div class="col-12">
+                <div class="glass-card map-section">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="fas fa-map me-2"></i>Pothole Detection Map</h5>
+                        <a href="/map" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-expand me-1"></i>Full Screen
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Map Filters (Desktop) -->
+                        <div class="d-none d-md-block">
+                            <div class="map-filters">
+                                <h6 class="mb-3"><i class="fas fa-filter me-2"></i>Filters</h6>
+                                
+                                <div class="filter-toggle">
+                                    <label for="filter-severe" class="form-label mb-0">Severe Only</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="filter-severe">
+                                    </div>
+                                </div>
+                                
+                                <div class="filter-toggle">
+                                    <label for="filter-pins" class="form-label mb-0">Show Pins</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="filter-pins" checked>
+                                    </div>
+                                </div>
+                                
+                                <div class="filter-toggle">
+                                    <label for="filter-reports" class="form-label mb-0">My Reports</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="filter-reports">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Filter Toggle -->
+                        <div class="d-md-none p-3">
+                            <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilters">
+                                <i class="fas fa-filter me-2"></i>Filters
+                            </button>
+                        </div>
+                        
+                        <!-- Map Container -->
+                        <div class="map-container">
+                            <div id="pothole-map" style="height: 400px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mobile Filters Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobileFilters">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title"><i class="fas fa-filter me-2"></i>Map Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="filter-toggle">
+            <label for="mobile-filter-severe" class="form-label">Severe Only</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="mobile-filter-severe">
+            </div>
+        </div>
+        
+        <div class="filter-toggle">
+            <label for="mobile-filter-pins" class="form-label">Show Pins</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="mobile-filter-pins" checked>
+            </div>
+        </div>
+        
+        <div class="filter-toggle">
+            <label for="mobile-filter-reports" class="form-label">My Reports</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="mobile-filter-reports">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
